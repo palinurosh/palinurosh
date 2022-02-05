@@ -2,104 +2,84 @@ package com.company;
 
 import java.util.Scanner;
 
+
 public class ListaPrecios {
 
 
-
     public static void main(String[] args) {
-        Scanner s = new Scanner(System.in);
+        //Scanner s = new Scanner(System.in);
+
         System.out.println("Calculadora útil");
 
         //Petición de datos a usuario
         System.out.println("Intorduce la base imponible");
-        double base = s.nextDouble();
+        double base = Double.parseDouble(System.console().readLine());
 
-        //Tipos de IVA
-        String general = "21 %";
-        String reducido = "10 %";
-        String superreducido = "4 %";
-        double calculogeneral = base * 21 / 100;
-        double calculoreducido = base * 10 / 100;
-        double calculosuperreducido = base * 4 / 100;
-        //Promociones
-        /*double sinpromo = base;
-        double sinpromoreduc = calculoreducido;
-        double sinpromosuperreducido = calculosuperreducido;*/
-        double mitadgral = (base * 21 / 100) /2;
-        double mitadreducido = (base * 10 / 100) /2;
-        double mitadsuperreducido = (base * 4 / 100) /2;
-        double menoscinco = base - 5;
-        double menoscincoreducido = (base * 10 / 100) - 5;
-        double menoscincosuperreducido = (base * 4 / 100) - 5;
-        double cincoporc = base - (base * 5 / 100);
-        double cincoporcreduc = calculoreducido - (calculoreducido * 5 / 100);
-        double cincosuperreducido = calculosuperreducido - (calculosuperreducido * 5 / 100);
+        System.out.println("Introduce tipo de IVA (general, reducido o superreducido): ");
+        String tipoIVA = System.console().readLine();
 
+        System.out.println("Introduce código promocional (nopro, mitad, menos5 o 5porc): ");
+        String promo = System.console().readLine();
 
-        System.out.println("Tipo de iva: 21% (general), 10% (reducido), 4% (superreducido");
-        String tipo = s.next();
+        //Calcula Precio e IVA antew del descuento
 
-        switch (tipo) {
-            case "21%":
-                System.out.println("Has elegido IVA general: 21 % = \t" + calculogeneral + "\n");
+        int tipoIVANumerico = 0;
+
+        switch (tipoIVA) {
+            case "general":
+                tipoIVANumerico = 21;
                 break;
-            case "10%":
-                System.out.println("Has elegido IVA reducido: 10 % = \t" + calculoreducido + "\n");
+            case "reducido":
+                tipoIVANumerico = 10;
                 break;
-            case "4%":
-                System.out.println("Has elegido IVA superreducido: 4 % = \t" + calculosuperreducido + "\n");
+            case "superreducido":
+                tipoIVANumerico = 4;
                 break;
+            default:
+                System.out.println("Este IVA no vale, listo...");
         }
+        double iva = base * tipoIVANumerico / 100;
+        double precioSinDescuento = base + iva;
 
-        System.out.println("Codigo promocional: Sin promo (SP), Mitad (M), Menos5 (-5) o Menos 5 por ciento (5%): ");
-        String promo = s.next();
+        //  Calcula descuento
+
+        double descuento = 0;
+
         switch (promo) {
-            case "SP":
-                System.out.println("No hago descuento, majo/a\t");
+            case "nopro":
                 break;
-            case "M":
-                System.out.println("Te voy a cobrar la mitad\t" + mitadgral + "\n");
+            case "mitad":
+                descuento = precioSinDescuento / 2;
                 break;
-            case "-5":
-                System.out.println("Te descuento 5 eurazos\t" + menoscinco + "\n");
+            case "menos5":
+                descuento = precioSinDescuento - 5;
                 break;
-            case "-5%":
-                System.out.println("Ahí va un 5 % de descuento\t" + cincoporc + "\n");
+            case "5porc":
+                descuento = precioSinDescuento * 0.05;
                 break;
+            default:
+                System.out.println("Vete a bacilar a tu Prima Caty");
         }
 
-        System.out.println("\tBase Imponible: " + base);
-        System.out.println("\tIVA " + tipo + "          ");
+        //Precio final desglosado
+
+        double total = precioSinDescuento - descuento;
+
+        System.out.println("\tBase imponible: " + base);
+        System.out.println("\tIVA " + "(  " + tipoIVA + ") " + tipoIVANumerico + "%");
+        System.out.println("\tPrecio con IVA: " + precioSinDescuento);
+        System.out.println("\tCódigo promocional " + "(" + promo + ") " + "-" + descuento);
+        System.out.println("\tTotal: \t\t" + total);
 
 
 
-    }
-
-
-
-
-        /*Tipos de IVA
-        String general = "21 %";
-        String reducido = "10 %";
-        String superreducido = "4 %";
-        double calculogeneral = base * 21 / 100;
-        double calculoreducido = base * 10 / 100;
-        double calculosuperreducido = base * 4 / 100;
-        //Promociones
-        double sinpromo = base;
-        double sinpromoreduc = calculoreducido;
-        double sinpromosuperreducido = calculosuperreducido;
-        double mitadgral = (base * 21 / 100) /2;
-        double mitadreducido = (base * 10 / 100) /2;
-        double mitadsuperreducido = (base * 4 / 100) /2;
-        double menoscinco = base - 5;
-        double menoscincoreducido = (base * 10 / 100) - 5;
-        double menoscincosuperreducido = (base * 4 / 100) - 5;
-        double cincoporc = base - (base * 5 / 100);
-        double cincoporcreduc = calculoreducido - (calculoreducido * 5 / 100);
-        double cincosuperreducido = calculosuperreducido - (calculosuperreducido * 5 / 100);
-*/
 
     }
+
+}
+
+
+
+
 
 
